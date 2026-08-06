@@ -10,6 +10,7 @@ def generate_answer(user_question, retrieved_answer):
     prompt = f"""You are a helpful assistant answering questions about telebirr mobile money.
 
 ONLY use the information below to answer. Do not add anything you know from elsewhere.
+Do not add extra advice, suggestions, or steps that are not explicitly stated in the retrieved information below — even if they seem reasonable or helpful.
 Include all relevant details from the retrieved information below — don't leave out specifics like conditions, exceptions, or steps, even if the answer becomes longer.
 If the information below doesn't actually answer the question, say you don't have that information.
 
