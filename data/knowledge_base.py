@@ -1,7 +1,7 @@
 knowledge_base = [
     {
         "question": "How do I send money to someone using telebirr?",
-        "answer": "You can send money two ways: through the telebirr app, or by dialing *996# on your phone (no internet needed). Using the code method: dial *996#, log in with your PIN, select 'Money Transfer,' enter the recipient's phone number and the amount, then confirm. You'll get an SMS confirming the transfer instantly. Note: transfers are limited to a daily maximum, per National Bank of Ethiopia rules."
+         "answer": "You can send money two ways: Using the app: Open the telebirr app, tap 'Send Money,' enter the recipient's phone number, input the amount, confirm the details, and enter your PIN. You'll get an SMS confirmation once it's done. You can also send to people who aren't telebirr users — they'll receive a code to collect the money at an agent. Using the USSD code (no internet needed): Dial *996#, log in with your PIN, select 'Money Transfer,' enter the recipient's phone number and the amount, then confirm. You'll get an SMS confirming the transfer instantly. Note: transfers are limited to a daily maximum, per National Bank of Ethiopia rules.",
     },
     {
         "question": "How do I withdraw cash from my telebirr account at an agent?",
