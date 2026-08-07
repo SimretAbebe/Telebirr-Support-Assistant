@@ -6,20 +6,21 @@ load_dotenv()
 
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
-def generate_answer(user_question, retrieved_answer):
+def generate_answer(user_question, retrieved_context):
     prompt = f"""You are a helpful assistant answering questions about telebirr mobile money.
 
-ONLY use the information below to answer. Do not add anything you know from elsewhere.
-Do not add extra advice, suggestions, or steps that are not explicitly stated in the retrieved information below — even if they seem reasonable or helpful.
-Include all relevant details from the retrieved information below — don't leave out specifics like conditions, exceptions, or steps, even if the answer becomes longer.
-If the information below doesn't actually answer the question, say you don't have that information.
+Below are some retrieved pieces of information, each with its own question and answer. One of them is likely the best match for the user's actual question below — use that one to answer.
+
+Only use facts from the matching piece of information. Do not invent details. Include all relevant specifics from it, even if the answer becomes longer.
+
+If NONE of the pieces below actually relate to the user's question, say you don't have that information.
 
 Retrieved information:
-{retrieved_answer}
+{retrieved_context}
 
 User's question: {user_question}
 
-Answer clearly and naturally, based only on the retrieved information above."""
+Answer clearly, based on the most relevant piece of information above."""
 
     response = client.chat.completions.create(
         model="llama-3.1-8b-instant",

@@ -13,3 +13,19 @@ for i, item in enumerate(knowledge_base, start=1):
     response = ask(item['question'])
     print(f"Response: {response}")
     
+
+print("TESTING WITH REWORDED / REAL-WORLD PHRASED QUESTIONS")
+
+reworded_tests = [
+    "My money didn't arrive after I sent it",
+    "how can i transfer money?",
+    "How do I cash out at an agent shop?",
+    "Can I send birr to my brother in America?",
+    "will telebirr tell me when my problem is fixed?"
+]
+
+for i, question in enumerate(reworded_tests, start=1):
+    print(f"\n Reworded Test {i} ")
+    print(f"Question: {question}")
+    response = ask(question)
+    print(f"Response: {response}")
