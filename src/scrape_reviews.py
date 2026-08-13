@@ -1,3 +1,4 @@
+import os
 from google_play_scraper import reviews, Sort
 
 result, _ = reviews(
@@ -8,8 +9,9 @@ result, _ = reviews(
     count=200
 )
 
-with open('data/raw_reviews.txt', 'w', encoding='utf-8') as f:
+output_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'data', 'raw_reviews.txt'))
+with open(output_path, 'w', encoding='utf-8') as f:
     for r in result:
         f.write(r['content'] + '\n---\n')
 
-print(f"Saved {len(result)} reviews to data/raw_reviews.txt")
+print(f"Saved {len(result)} reviews to {output_path}")

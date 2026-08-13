@@ -1,37 +1,31 @@
-from sentence_transformers import SentenceTransformer
-import numpy as np
-import sys
 import os
+import chromadb
+from chromadb.utils import embedding_functions
 
-sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from data.knowledge_base import knowledge_base
+CHROMA_DB_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "chroma_db"))
+client = chromadb.PersistentClient(path=CHROMA_DB_DIR)
 
-model = SentenceTransformer('all-MiniLM-L6-v2')
+sentence_transformer_ef = embedding_functions.SentenceTransformerEmbeddingFunction(
+    model_name="all-MiniLM-L6-v2"
+)
 
-questions = [item["question"] for item in knowledge_base]
-question_embeddings = model.encode(questions)
+collection = client.get_or_create_collection(
+    name="telebirr_qa",
+    embedding_function=sentence_transformer_ef
+)
 
-def cosine_similarity(a, b):
-    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
+def retrieve(user_question, top_k=3):
+    results = collection.query(
+        query_texts=[user_question],
+        n_results=top_k
+    )
 
-def retrieve(user_question, top_k=1):
-    user_embedding = model.encode([user_question])[0]
-    
-    scores = []
-    for i, q_embedding in enumerate(question_embeddings):
-        score = cosine_similarity(user_embedding, q_embedding)
-        scores.append((score, knowledge_base[i]))
-    
-    scores.sort(key=lambda x: x[0], reverse=True)
-    
-    return scores[:top_k]
+    matches = []
+    for i in range(len(results['documents'][0])):
+        question = results['documents'][0][i]
+        answer = results['metadatas'][0][i]['answer']
+        distance = results['distances'][0][i]
+        similarity = 1 - distance
+        matches.append((similarity, {"question": question, "answer": answer}))
 
-# Quick test
-if __name__ == "__main__":
-    test_question = "My money didn't arrive after I sent it"
-    results = retrieve(test_question, top_k=2)
-    
-    for score, item in results:
-        print(f"Score: {score:.4f}")
-        print(f"Matched Q: {item['question']}")
-        print(f"Answer: {item['answer']}")
+    return matches

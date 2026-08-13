@@ -1,6 +1,7 @@
 import sys
 import os
 sys.path.append(os.path.dirname(__file__))
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 from rag_pipeline import ask
 from data.knowledge_base import knowledge_base
