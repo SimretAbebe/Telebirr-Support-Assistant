@@ -45,3 +45,6 @@ ehthumbs.db
 *.log
 .coverage
 htmlcov/
+
+# Evaluation output files
+data/*.csv
