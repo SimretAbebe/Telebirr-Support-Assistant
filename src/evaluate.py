@@ -10,6 +10,7 @@ from rag_pipeline import ask
 from retriever import retrieve
 from data.knowledge_base import knowledge_base
 from ragas import evaluate
+from ragas.run_config import RunConfig
 from ragas.metrics import faithfulness, answer_relevancy, context_precision, context_recall
 from datasets import Dataset
 from langchain_groq import ChatGroq
@@ -61,7 +62,8 @@ results = evaluate(
     eval_dataset,
     metrics=[faithfulness, answer_relevancy, context_precision, context_recall],
     llm=ragas_llm,
-    embeddings=ragas_embeddings
+    embeddings=ragas_embeddings,
+    run_config=RunConfig(max_workers=2, timeout=120)
 )
 
 print("RAGAS EVALUATION RESULTS")
