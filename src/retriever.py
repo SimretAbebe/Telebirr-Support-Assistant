@@ -19,6 +19,15 @@ amharic_collection = client.get_or_create_collection(
     embedding_function=amharic_ef
 )
 
+def keyword_score(query, text):
+    query_words = set(query.lower().split())
+    text_words = set(text.lower().split())
+    overlap = query_words.intersection(text_words)
+    if len(query_words) == 0:
+        return 0
+    return len(overlap) / len(query_words)
+
+
 def retrieve(user_question, language="en", top_k=3):
     collection = amharic_collection if language == "am" else english_collection
 
@@ -32,7 +41,13 @@ def retrieve(user_question, language="en", top_k=3):
         question = results['documents'][0][i]
         answer = results['metadatas'][0][i]['answer']
         distance = results['distances'][0][i]
-        similarity = 1 - distance
-        matches.append((similarity, {"question": question, "answer": answer}))
+        semantic_similarity = 1 - distance
 
+        kw_score = keyword_score(user_question, question + " " + answer)
+
+        combined_score = (0.7 * semantic_similarity) + (0.3 * kw_score)
+
+        matches.append((combined_score, {"question": question, "answer": answer}))
+
+    matches.sort(key=lambda x: x[0], reverse=True)
     return matches

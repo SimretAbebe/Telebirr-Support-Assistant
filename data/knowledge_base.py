@@ -16,7 +16,7 @@ knowledge_base = [
         "answer": "No — telebirr currently only supports sending money to people within Ethiopia. You can, however, receive money from abroad through telebirr's international remittance partners (like Remitly or TalkRemit) if someone wants to send money to you."
     },
     {
-        "question": "How can I know if my failed transaction has been successfully resolved?",
+       "question": "How can I know if my failed transaction has been successfully resolved, or will telebirr tell me when the problem is fixed?",
         "answer": "telebirr typically confirms resolved transactions the same way it confirms successful ones — via SMS notification once the issue is fixed (e.g., funds returned to your account). If you reported an issue and haven't received a confirmation SMS after a reasonable time, follow up with telebirr customer support using your original transaction ID as reference — don't assume it's resolved just because time has passed with no communication."
     },
     {
