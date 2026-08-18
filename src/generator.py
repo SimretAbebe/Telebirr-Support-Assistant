@@ -6,8 +6,12 @@ load_dotenv()
 
 client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 
-def generate_answer(user_question, retrieved_context):
+def generate_answer(user_question, retrieved_context, language="en"):
+    lang_instruction = "Respond in Amharic." if language == "am" else "Respond in English."
+    
     prompt = f"""You are a helpful assistant answering questions about telebirr mobile money.
+
+{lang_instruction}
 
 Below are some retrieved pieces of information, each with its own question and answer. One of them is likely the best match for the user's actual question below — use that one to answer.
 
@@ -23,7 +27,7 @@ User's question: {user_question}
 Answer clearly, based on the most relevant piece of information above."""
 
     response = client.chat.completions.create(
-        model="llama-3.1-8b-instant",
+        model="openai/gpt-oss-20b",
         messages=[{"role": "user", "content": prompt}],
         temperature=0.3
     )
