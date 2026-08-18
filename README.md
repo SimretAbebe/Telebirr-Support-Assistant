@@ -1,3 +1,13 @@
+---
+title: Telebirr Support Assistant
+colorFrom: yellow
+colorTo: gray
+sdk: gradio
+sdk_version: "6.24.0"
+app_file: app.py
+pinned: false
+---
+
 # Telebirr Support Assistant
 
 A bilingual (English & Amharic) RAG assistant that answers real telebirr questions — grounded strictly in documented information, no made-up answers.
