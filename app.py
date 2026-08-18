@@ -1,3 +1,8 @@
+import os
+if not os.path.exists("./chroma_db"):
+    os.system("python src/chroma_setup.py")
+    os.system("python src/chroma_setup_am.py")
+
 import gradio as gr
 import sys
 import os
